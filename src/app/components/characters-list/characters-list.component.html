@@ -1,1 +1,26 @@
-<p>characters-list works!</p>
+
+
+<div class="container">
+
+    @if(arrCharacters){
+        @for(character of arrCharacters; track character.id){
+
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{character.image}}" alt="{{character.name}} image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{character.name}}</h5>
+                  <div class="card-text">
+                    <b>Status: </b>{{character.status}}<br>
+                    <b>Specie: </b>{{character.species}}<br>
+                    <b>Origin: </b>{{character.origin.name}}<br>
+                  </div>
+                  <!--<a href="#" class="btn btn-primary">Go somewhere</a>-->
+                </div>
+              </div>
+        }
+    }@else{
+        <div>Doesn't found your character.</div>
+    }
+
+
+</div>
