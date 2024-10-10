@@ -5,10 +5,9 @@
       <div class="col-12">
         <img src="assets/logo.png" alt="Rick y Morty Logo" class="img-fluid m-3" style="max-width: 300px;" />
       </div>
-      <div class="col-12">
-        <form [formGroup]="formSearch" class="form-inline my-2 my-lg-0 justify-content-center" (ngSubmit)="filterByName()">
-          <input formControlName="searchName" class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" style="min-width: 200px;">
-          <button class="btn btn-outline-success m-3" type="submit">Search</button>
+      <div class="col-12  p-3">
+        <form [formGroup]="formSearch" class="form-inline justify-content-center">
+          <input formControlName="searchName" class="form-control mb-3" type="search" placeholder="Search your character..." aria-label="Search" style="min-width: 200px;">
         </form>
       </div>
     </div>
@@ -19,15 +18,14 @@
 <div class="container">
 
     <div class="row">
-        <h1 class="my-4">Characters List</h1>
-        <hr>
+        <h1 class="my-4 text-center">Characters List</h1>
     </div>
     <div class="row justify-content-center">
 
     @if(arrCharacters.length>0){
         @for(character of arrCharacters; track character.id){
 
-            <div class="card d-flex m-2" style="width: 15rem;">
+            <div class="card d-flex m-2 shadow-sm">
                 <img class="card-img-top" src="{{character.image}}" alt="{{character.name}} image cap">
                 <div class="card-body">
                   <h5 class="card-title">{{character.name}}</h5>
@@ -40,7 +38,7 @@
               </div>
         }
     }@else{
-        <div>Doesn't found your character.</div>
+        <h5 class="text-center m-2">Oops! This character has wandered off to another universe. <br>Try searching for someone else!</h5>
     }
 
     </div>

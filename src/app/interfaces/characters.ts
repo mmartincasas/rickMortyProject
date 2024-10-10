@@ -10,11 +10,11 @@ export interface Characters {
 }
 
 export interface CharactersList {
-    info: [
+    info: {
         count: number,
         pages: number,
         next: string,
         prev: string
-    ],
+    },
     results: Characters[]
 }

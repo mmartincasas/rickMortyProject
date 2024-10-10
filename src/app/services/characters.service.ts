@@ -11,14 +11,12 @@ export class CharactersService {
 
   httpClient = inject (HttpClient);
 
-  /*
-  getAll(){
-    return this.httpClient.get<CharactersList>(this.url);
-  }*/
-
-    getCharactersByName(name: string){
+  getCharactersByName(name: string){
     return this.httpClient.get<CharactersList>(this.url + '/?name=' + name);
   }
-
+  
+  getMoreCharactersByUrl(url: string) {
+    return this.httpClient.get<CharactersList>(url);
+  }
   
 }
