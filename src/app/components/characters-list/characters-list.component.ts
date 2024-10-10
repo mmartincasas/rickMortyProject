@@ -44,6 +44,7 @@ export class CharactersListComponent implements OnInit {
     });
   }
 
+  
   inputSubscribe(){
 
     this.formSearch.get('searchName')?.valueChanges.subscribe(value => {
@@ -52,29 +53,31 @@ export class CharactersListComponent implements OnInit {
 
   }
 
-  filterByName(searchValue: string) {
 
+  filterByName(searchValue: string) {
     if (searchValue.trim() === '') {
       this.getAllCharacters();
-
     } else {
-      this.charactersService.getCharactersByName(searchValue).subscribe(data => {
-        this.arrCharacters = data.results;
-        this.noResults = this.arrCharacters.length === 0;
-        this.nextPageUrl = data.info.next;
-      }, err => {
-        this.arrCharacters = [];
-        this.noResults = true;
-        this.nextPageUrl = null;
+      this.charactersService.getCharactersByName(searchValue).subscribe({
+        next: data => {
+          this.arrCharacters = data.results;
+          this.noResults = this.arrCharacters.length === 0;
+          this.nextPageUrl = data.info.next;
+        },
+        error: err => {
+          this.arrCharacters = [];
+          this.noResults = true;
+          this.nextPageUrl = null;
+        }
       });
       this.scrollToTop();
     }
-
   }
 
-    scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   @HostListener('window:scroll', [])
   onScroll(): void {
@@ -90,16 +93,21 @@ export class CharactersListComponent implements OnInit {
     }
   }
 
+
   loadMoreCharacters() {
     if (!this.nextPageUrl) return;
 
     this.loading = true;
-    this.charactersService.getMoreCharactersByUrl(this.nextPageUrl).subscribe(data => {
-      this.arrCharacters = [...this.arrCharacters, ...data.results];
-      this.nextPageUrl = data.info.next;
-      this.loading = false;
-    }, err => {
-      this.loading = false;
+    this.charactersService.getMoreCharactersByUrl(this.nextPageUrl).subscribe({
+      next: data => {
+        this.arrCharacters = [...this.arrCharacters, ...data.results];
+        this.nextPageUrl = data.info.next;
+        this.loading = false;
+      },
+      error: err => {
+        console.error(err);
+        this.loading = false;
+      }
     });
   }
 
